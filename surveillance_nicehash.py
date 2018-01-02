@@ -8,7 +8,7 @@ import progressbar
 import datetime
 import win32file
 import msvcrt
-
+import pywintypes
 
 processus_a_recuperer = "excavator.exe"
 # processus_a_recuperer = "sleep"
@@ -72,8 +72,13 @@ def tail(theFile):
                     time.sleep(0.1)
                 if compteur2 >=10:
                     print(datetime.datetime.now(),"=> Ca fait trop longtemps qu il n y a rien .... On ferme et on reouvre")
-                    yield("vide")
                     in_file.close()
+                    try:
+                        win32file.CloseHandle(file_descriptor)
+                    except pywintypes.error:
+                        print("Erreur : le fichier a bouge")
+
+                    yield ("vide")
                 continue
             in_file.close()
             yield line
@@ -133,5 +138,7 @@ while True:
             if ((compteur%30) == 0) or (maLigne=="vide"):
                 #compteur=0
                 print (datetime.datetime.now(),"=> On recharge la log.")
+                #print(nhm2_exec_path)
+                #print (derniere_log(nhm2_exec_path))
                 log_a_surveiller = derniere_log(nhm2_exec_path)
 
