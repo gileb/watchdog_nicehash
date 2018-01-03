@@ -40,21 +40,28 @@ def tail(theFile):
     "equivalent de tail -f en unix"
     compteur2=0
     flag_relance=0
-    try:
-        handle = win32file.CreateFile(theFile,
-                                      win32file.GENERIC_READ,
-                                      win32file.FILE_SHARE_DELETE |
-                                      win32file.FILE_SHARE_READ |
-                                      win32file.FILE_SHARE_WRITE,
-                                      None,
-                                      win32file.OPEN_EXISTING,
-                                      0,
-                                      None)
 
-    except pywintypes.error as e:
-        print("Erreur : ",e)
-        exit(1)
-    
+    # had to do a while true because file disapears sometimes while trying to open it
+    #i guess file disapears between call derniere_log and now
+    while true:
+        try:
+            handle = win32file.CreateFile(theFile,
+                                          win32file.GENERIC_READ,
+                                          win32file.FILE_SHARE_DELETE |
+                                          win32file.FILE_SHARE_READ |
+                                          win32file.FILE_SHARE_WRITE,
+                                          None,
+                                          win32file.OPEN_EXISTING,
+                                          0,
+                                          None)
+
+        except pywintypes.error as e:
+            print("Erreur : ",e)
+            log_a_surveiller = derniere_log(nhm2_exec_path)
+            continue
+        break
+
+
     detached_handle = handle.Detach()
     file_descriptor = msvcrt.open_osfhandle(detached_handle, os.O_RDONLY)
     with open(file_descriptor) as in_file:
