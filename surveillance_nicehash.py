@@ -40,18 +40,22 @@ def tail(theFile):
     "equivalent de tail -f en unix"
     compteur2=0
     flag_relance=0
-    handle = win32file.CreateFile(theFile,
-                                  win32file.GENERIC_READ,
-                                  win32file.FILE_SHARE_DELETE |
-                                  win32file.FILE_SHARE_READ |
-                                  win32file.FILE_SHARE_WRITE,
-                                  None,
-                                  win32file.OPEN_EXISTING,
-                                  0,
-                                  None)
+    try:
+        handle = win32file.CreateFile(theFile,
+                                      win32file.GENERIC_READ,
+                                      win32file.FILE_SHARE_DELETE |
+                                      win32file.FILE_SHARE_READ |
+                                      win32file.FILE_SHARE_WRITE,
+                                      None,
+                                      win32file.OPEN_EXISTING,
+                                      0,
+                                      None)
 
+    except pywintypes.error as e:
+        print("Erreur : ",e)
+        exit(1)
+    
     detached_handle = handle.Detach()
-
     file_descriptor = msvcrt.open_osfhandle(detached_handle, os.O_RDONLY)
     with open(file_descriptor) as in_file:
         in_file.seek(0, 2)
