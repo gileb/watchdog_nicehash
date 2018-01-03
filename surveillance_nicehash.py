@@ -43,7 +43,7 @@ def tail(theFile):
 
     # had to do a while true because file disapears sometimes while trying to open it
     #i guess file disapears between call derniere_log and now
-    while true:
+    while True:
         try:
             handle = win32file.CreateFile(theFile,
                                           win32file.GENERIC_READ,
