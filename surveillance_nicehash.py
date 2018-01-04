@@ -36,6 +36,15 @@ def derniere_log(nhm2_exec_path):
     return(log_a_surveiller)
 
 
+def restart_program():
+    """Restarts the current program.
+    Note: this function does not return. Any cleanup action (like
+    saving data) must be done before calling this function."""
+    python = sys.executable
+    os.execl(python, python, * sys.argv)
+
+
+
 def tail(theFile):
     "equivalent de tail -f en unix"
     compteur2=0
@@ -58,7 +67,8 @@ def tail(theFile):
         except pywintypes.error as e:
             print("Erreur : ",e)
             log_a_surveiller = derniere_log(nhm2_exec_path)
-            continue
+
+            restart_program()
         break
 
 
