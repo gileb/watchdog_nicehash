@@ -38,9 +38,7 @@ def derniere_log(nhm2_exec_path):
 
 
 def restart_program():
-    """Restarts the current program.
-    Note: this function does not return. Any cleanup action (like
-    saving data) must be done before calling this function."""
+    """comme son nom lindique...."""
     print(datetime.datetime.now(),"=> Relance du programme")
     python = sys.executable
     os.execl(python, python, * sys.argv)
@@ -94,6 +92,7 @@ def tail(theFile):
 
         # on a pas trouve le match, on continue
 
+        # on va au bout du fichier
         in_file.seek(0, 2)
         #print("fichier : ", theFile)
         while not in_file.closed:
@@ -106,10 +105,17 @@ def tail(theFile):
                 #print(datetime.datetime.now(),"=> Rien trouve ....")
                 compteur2+=1
                 widgets = ['On attends 5 secs...  ',progressbar.AnimatedMarker(markers='.oO@* ')]
+
+                # progress bar (timer de 5 secs)
+
                 bar = progressbar.ProgressBar(widgets=widgets)
 
                 for i in bar((i for i in range(50))):
                     time.sleep(0.1)
+
+                # Si on a passe plus de 50 secondes et qu'il n'y a rien dans le fichier
+                # on tente une reouverture du dernier fichier log
+
                 if compteur2 >=10:
                     print(datetime.datetime.now(),"=> Ca fait trop longtemps qu il n y a rien .... On ferme et on reouvre")
                     in_file.close()
@@ -129,6 +135,9 @@ def search_and_destroy(name):
     assert name, name
     # ls = []
     print(datetime.datetime.now(),"=> ",name)
+
+    # on recupere les noms des processus
+
     for p in psutil.process_iter():
         name_, exe, cmdline = "", "", []
         try:
