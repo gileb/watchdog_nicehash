@@ -67,7 +67,7 @@ def tail(theFile):
         except pywintypes.error as e:
             print("Erreur : ",e)
             log_a_surveiller = derniere_log(nhm2_exec_path)
-
+            time.sleep(10)
             restart_program()
         break
 
