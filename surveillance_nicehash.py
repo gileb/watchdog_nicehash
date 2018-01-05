@@ -185,7 +185,7 @@ while True:
 
             # os.system("tasklist")
             if ((compteur%30) == 0) or (maLigne=="vide"):
-                #compteur=0
+                compteur=0
                 print (datetime.datetime.now(),"=> On recharge la log.")
                 #print(nhm2_exec_path)
                 #print (derniere_log(nhm2_exec_path))
