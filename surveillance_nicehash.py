@@ -41,7 +41,7 @@ def restart_program():
     """comme son nom lindique...."""
     print(datetime.datetime.now(),"=> Relance du programme")
     python = sys.executable
-    os.execl(python, python, * sys.argv)
+    os.execl(python, python, *sys.argv)
 
 
 
