@@ -9,6 +9,7 @@ import datetime
 import win32file
 import msvcrt
 import pywintypes
+import sys
 
 processus_a_recuperer = "excavator.exe"
 # processus_a_recuperer = "sleep"
