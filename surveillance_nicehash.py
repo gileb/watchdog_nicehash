@@ -81,8 +81,8 @@ def tail(theFile):
         #
         #
         for line in in_file:
-            line = re.findall(str(maLigne), line)[0]
-            if line:
+            match = line_regex.search(str(line))
+            if match:
                 # c'est qu'on a un match
                 retourPid = search_and_destroy(processus_a_recuperer)
                 # print(retourPid)
