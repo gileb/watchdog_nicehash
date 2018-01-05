@@ -77,6 +77,22 @@ def tail(theFile):
     detached_handle = handle.Detach()
     file_descriptor = msvcrt.open_osfhandle(detached_handle, os.O_RDONLY)
     with open(file_descriptor) as in_file:
+        # d'abord on recherche l 'occurence dans tout le fichier, au cas ou...
+        #
+        #
+        line = re.findall(r'something', line)[0]
+        if line:
+            # c'est qu'on a un match
+            retourPid = search_and_destroy(processus_a_recuperer)
+            # print(retourPid)
+            logging.debug(maLigne)
+            if retourPid:
+                logging.debug("killed %s", retourPid)
+            else:
+                logging.debug("Processus non trouve...")
+
+        # on a pas trouve le match, on continue
+
         in_file.seek(0, 2)
         #print("fichier : ", theFile)
         while not in_file.closed:
