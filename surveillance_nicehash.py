@@ -178,7 +178,7 @@ while True:
             logging.debug(maLigne)
             if retourPid:
                 logging.debug("killed %s", retourPid)
-                restart_program()
+                #restart_program()
             else:
                 logging.debug("Processus non trouve...")
 
