@@ -87,6 +87,9 @@ def tail(theFile):
                 logging.debug(line)
                 if retourPid:
                     logging.debug("killed %s", retourPid)
+                    restart_program()
+
+
                 else:
                     logging.debug("Processus non trouve...")
 
