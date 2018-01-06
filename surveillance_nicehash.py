@@ -84,7 +84,7 @@ def tail(theFile):
                 # c'est qu'on a un match
                 retourPid = search_and_destroy(processus_a_recuperer)
                 # print(retourPid)
-                logging.debug(maLigne)
+                logging.debug(line)
                 if retourPid:
                     logging.debug("killed %s", retourPid)
                 else:
